@@ -25,7 +25,22 @@ public class PersonagemService {
     }
 
     public ItensMagicos criarItems(ItensMagicos item){
-          return this.itensMagicosRepository.save(item);
+            if(item.getForca() > 10){
+               throw  new RuntimeException("A força não pode ser maior que 10");
+            }
+            if(item.getDefesa() > 10){
+               throw  new RuntimeException("A defesa não pode ser maior que 10");
+            }
+            if(item.getForca() == 0 && item.getDefesa() == 0){
+                throw new RuntimeException("A força e a defesa não podem ser 0");
+            }
+            verificaTipo(item.getTipo(), item.getDefesa(), item.getForca());
+
+            return this.itensMagicosRepository.save(item);
+
+
+
+
     }
 
     public Personagem editarPersonagem(Personagem personagem){
@@ -55,21 +70,18 @@ public class PersonagemService {
     }
 
 
-    String verificaTipo(TipoItem tipoItem, Integer defesa, Integer forca){
+    void verificaTipo(TipoItem tipoItem, Integer defesa, Integer forca){
         switch (tipoItem){
             case ARMA:
                 if(defesa != 0){
-                    return "no tipo arma a defesa deve ser 0";
+                    throw new RuntimeException("no tipo arma a defesa deve ser 0");
                 }
                 break;
             case ARMADURA:
                 if(forca != 0){
-                    return "no tipo armadura a força deve ser 0";
+                    throw new RuntimeException("no tipo armadura a força deve ser 0");
                 }
                 break;
-            default:
-                return "ok";
         }
-        return "ok";
     }
 }

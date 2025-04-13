@@ -59,8 +59,13 @@ public class crudController {
 
     @PostMapping("/itens")
     public ResponseEntity<String> postItens(@RequestBody ItensMagicos item) {
-        personagemService.criarItems(item);
-        return ResponseEntity.ok("Item criado com sucesso!");
+        try {
+            personagemService.criarItems(item);
+            return ResponseEntity.ok("Item criado com sucesso!");
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @PutMapping("/itens")
