@@ -15,16 +15,19 @@ public class ItensMagicos {
 
     private TipoItem tipo;
 
-    private Integer força;
+    private Integer forca;
 
     private Integer defesa;
 
-    public ItensMagicos(Integer indentificador, String nome, TipoItem tipo, Integer força, Integer defesa) {
+    public ItensMagicos(Integer indentificador, String nome, TipoItem tipo, Integer forca, Integer defesa) {
         this.indentificador = indentificador;
         this.nome = nome;
         this.tipo = tipo;
-        this.força = força;
+        this.forca = forca;
         this.defesa = defesa;
+    }
+
+    public ItensMagicos() {
     }
 
     public Integer getIndentificador() {
@@ -51,12 +54,12 @@ public class ItensMagicos {
         this.tipo = tipo;
     }
 
-    public Integer getForça() {
-        return força;
+    public Integer getForca() {
+        return forca;
     }
 
-    public void setForça(Integer força) {
-        this.força = força;
+    public void setForca(Integer forca) {
+        this.forca = forca;
     }
 
     public Integer getDefesa() {

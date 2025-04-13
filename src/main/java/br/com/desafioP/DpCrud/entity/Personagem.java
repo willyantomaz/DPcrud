@@ -24,14 +24,38 @@ public class Personagem {
     @OneToMany
     private List<ItensMagicos> itensMagicos;
 
+    private Integer forca;
 
-    public Personagem(Integer identificador, String nome, String nomeAventureiro, Classe classe, Integer level, List<ItensMagicos> itensMagicos) {
+    private Integer defesa;
+
+
+    public Personagem(Integer identificador, String nome, String nomeAventureiro, Classe classe, Integer level, List<ItensMagicos> itensMagicos, Integer forca, Integer defesa) {
         this.identificador = identificador;
         this.nome = nome;
         this.nomeAventureiro = nomeAventureiro;
         this.classe = classe;
         this.level = level;
         this.itensMagicos = itensMagicos;
+        this.forca = forca;
+        this.defesa = defesa;
+    }
+    public Personagem() {
+    }
+
+    public Integer getForca() {
+        return forca;
+    }
+
+    public void setForca(Integer forca) {
+        this.forca = forca;
+    }
+
+    public Integer getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(Integer defesa) {
+        this.defesa = defesa;
     }
 
     public Integer getIdentificador() {
