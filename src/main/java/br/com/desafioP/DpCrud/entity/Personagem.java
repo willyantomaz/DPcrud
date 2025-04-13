@@ -43,7 +43,7 @@ public class Personagem {
     }
 
     public Integer getForca() {
-        return forca;
+       return forca;
     }
 
     public void setForca(Integer forca) {

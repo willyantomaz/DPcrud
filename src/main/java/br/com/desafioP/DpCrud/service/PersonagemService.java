@@ -21,6 +21,9 @@ public class PersonagemService {
     private ItensMagicosRepository itensMagicosRepository;
 
     public Personagem criarPersonagem(Personagem personagem){
+            if((personagem.getForca() + personagem.getDefesa()) > 10){
+                throw  new RuntimeException("A soma de defesa e força superou o limite de 10");
+            }
             return this.personagensRepository.save(personagem);
     }
 
@@ -57,19 +60,32 @@ public class PersonagemService {
         this.itensMagicosRepository.deleteById(id);
     }
     public Optional<Personagem> buscarPersonagemPorId(Integer id){
-        return this.personagensRepository.findById(id);
+        Optional<Personagem> personagem = this.personagensRepository.findById(id);
+        return Optional.of(somarStatus(personagem.get()));
+
     }
     public Optional<ItensMagicos> buscarItemPorId(Integer id){
         return this.itensMagicosRepository.findById(id);
     }
     public List<Personagem> listarPersonagens(){
-        return this.personagensRepository.findAll();
+        List<Personagem> personagens = this.personagensRepository.findAll();
+        personagens.forEach(this::somarStatus);
+        return personagens;
     }
     public List<ItensMagicos> listarItens(){
         return this.itensMagicosRepository.findAll();
     }
 
 
+    Personagem somarStatus(Personagem personagem){
+        if(!personagem.getItensMagicos().isEmpty()){
+            for (ItensMagicos item : personagem.getItensMagicos()) {
+                personagem.setForca(personagem.getForca() + item.getForca());
+                personagem.setDefesa(personagem.getDefesa() + item.getDefesa());
+            }
+        }
+        return personagem;
+    }
     void verificaTipo(TipoItem tipoItem, Integer defesa, Integer forca){
         switch (tipoItem){
             case ARMA:
