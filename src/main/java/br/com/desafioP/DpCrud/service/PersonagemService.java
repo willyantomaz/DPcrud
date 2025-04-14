@@ -48,6 +48,9 @@ public class PersonagemService {
     }
 
     public Personagem editarPersonagem(Personagem personagem){
+        if (personagem.getItensMagicos().stream().map(item -> item.getTipo() == TipoItem.AMULETO).isParallel()){
+            throw new RuntimeException("Personagem já tem Amuleto");
+        }
         return this.personagensRepository.save(personagem);
     }
 
