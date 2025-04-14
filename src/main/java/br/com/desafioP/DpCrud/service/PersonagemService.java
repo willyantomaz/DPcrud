@@ -97,10 +97,36 @@ public class PersonagemService {
         if (personagem.getItensMagicos().stream().map(item -> item.getTipo() == TipoItem.AMULETO).isParallel()){
             throw new RuntimeException("Personagem já tem Amuleto");
         }
+        verificaTipo(itensMagicos.getTipo(), itensMagicos.getDefesa(), itensMagicos.getForca());
         personagem.setItensMagicos(Collections.singletonList(itensMagicos));
         return this.personagensRepository.save(personagem);
     }
 
+    public List<ItensMagicos> buscarIntesPersonagem(Integer id){
+        if(this.personagensRepository.findById(id).isEmpty()){
+            throw new RuntimeException("Personagem não encontrado");
+        }
+        Personagem personagem = this.personagensRepository.findById(id).get();
+        List<ItensMagicos> itensMagicos = personagem.getItensMagicos();
+        return itensMagicos;
+    }
+
+    public String deletarItemPersonagem(Integer idPersonagem,Integer idItem){
+        if(this.personagensRepository.findById(idPersonagem).isEmpty()){
+            throw new RuntimeException("Personagem não encontrado");
+        }
+        Personagem personagem = this.personagensRepository.findById(idPersonagem).get();
+        List<ItensMagicos> itensMagicos = personagem.getItensMagicos();
+        ItensMagicos item = this.itensMagicosRepository.findById(idItem).get();
+        if(itensMagicos.contains(item)){
+            itensMagicos.remove(item);
+            personagem.setItensMagicos(itensMagicos);
+            this.personagensRepository.save(personagem);
+            return "Item removido com sucesso";
+        }else{
+            throw new RuntimeException("Item não encontrado");
+        }
+    }
 
     Personagem somarStatus(Personagem personagem){
         if(!personagem.getItensMagicos().isEmpty()){
