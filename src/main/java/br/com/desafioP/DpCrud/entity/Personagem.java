@@ -21,6 +21,7 @@ public class Personagem {
 
     private Integer level;
 
+
     @OneToMany
     private List<ItensMagicos> itensMagicos;
 

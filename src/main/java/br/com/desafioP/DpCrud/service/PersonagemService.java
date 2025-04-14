@@ -8,6 +8,7 @@ import br.com.desafioP.DpCrud.repository.PersonagensRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,27 @@ public class PersonagemService {
     }
     public List<ItensMagicos> listarItens(){
         return this.itensMagicosRepository.findAll();
+    }
+
+    public Personagem atualizarNome(Integer id,String nome){
+        if(this.personagensRepository.findById(id).isEmpty()){
+            throw new RuntimeException("Personagem não encontrado");
+        }
+        Personagem personagem = this.personagensRepository.findById(id).get();
+        personagem.setNome(nome);
+        return this.personagensRepository.save(personagem);
+    }
+
+    public Personagem adcionarItem(Integer id,ItensMagicos itensMagicos){
+        if (this.personagensRepository.findById(id).isEmpty()){
+            throw new RuntimeException("Personagem não encontrado");
+        }
+        Personagem personagem = this.personagensRepository.findById(id).get();
+        if (personagem.getItensMagicos().stream().map(item -> item.getTipo() == TipoItem.AMULETO).isParallel()){
+            throw new RuntimeException("Personagem já tem Amuleto");
+        }
+        personagem.setItensMagicos(Collections.singletonList(itensMagicos));
+        return this.personagensRepository.save(personagem);
     }
 
 

@@ -9,7 +9,7 @@ public class ItensMagicos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer indentificador;
+    private Integer identificador;
 
     private String nome;
 
@@ -20,7 +20,7 @@ public class ItensMagicos {
     private Integer defesa;
 
     public ItensMagicos(Integer indentificador, String nome, TipoItem tipo, Integer forca, Integer defesa) {
-        this.indentificador = indentificador;
+        this.identificador = indentificador;
         this.nome = nome;
         this.tipo = tipo;
         this.forca = forca;
@@ -31,11 +31,11 @@ public class ItensMagicos {
     }
 
     public Integer getIndentificador() {
-        return indentificador;
+        return identificador;
     }
 
     public void setIndentificador(Integer indentificador) {
-        this.indentificador = indentificador;
+        this.identificador = indentificador;
     }
 
     public String getNome() {
